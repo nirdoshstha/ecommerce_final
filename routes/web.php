@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\vendor\VendorController;
 use App\Http\Controllers\backend\BackendController;
+use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\UserController;
 
 /*
@@ -43,6 +44,16 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/user/edit/{id}',[UserController::class,'edit'])->name('user.edit');
     Route::put('/user/update/{id}',[UserController::class,'update'])->name('user.update');
     Route::delete('/user/destroy/{id}',[UserController::class,'destroy'])->name('user.destroy');
+
+    //Category
+    Route::get('/category',[CategoryController::class,'index'])->name('category.index');
+    Route::get('/category/show/{id}',[CategoryController::class,'show'])->name('category.show');
+    Route::get('/category/create',[CategoryController::class,'create'])->name('category.create');
+    Route::post('/category/store',[CategoryController::class,'store'])->name('category.store');
+    Route::get('/category/edit/{id}',[CategoryController::class,'edit'])->name('category.edit');
+    Route::put('/category/update/{id}',[CategoryController::class,'update'])->name('category.update');
+    Route::delete('/category/destroy/{id}',[CategoryController::class,'destroy'])->name('category.destroy');
+
 
 });
 

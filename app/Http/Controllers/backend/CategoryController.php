@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use Exception;
-use App\Models\User;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Controllers\Controller;
@@ -34,6 +34,28 @@ class CategoryController extends BackendBaseController
         return view($this->__loadDataToView($this->view_path.'show'),compact('data'));
     }
 
+    public function create(){
+        return view($this->__loadDataToView($this->view_path.'create'));
+    }
+
+    public function store(CategoryRequest $request){
+        try{
+            if($request->hasFile('image_field')){
+                // $this->deleteImage($data['row']->image);
+                $image_name =$this->uploadImage($request);
+                $request->request->add(['image'=>$image_name]);
+            }
+            $request->request->add(['created_by'=>auth()->user()->id]);
+            $data['row'] = $this->model->create($request->all());
+            session()->flash('success_message',$this->panel.'Stored Successfully');
+        }
+        catch(\Exception $e){
+            session()->flash('error_message',$this->panel.'Something went wrong');
+        }
+        return redirect(route($this->base_route.'index'));
+
+    }
+
     public function edit($id){
         $data = [];
         $data['row'] = $this->model::find($id);
@@ -45,7 +67,11 @@ class CategoryController extends BackendBaseController
         $data['row']    = $this->model::find($id);
 
         try{
-
+            if($request->hasFile('image_field')){
+                $this->deleteImage($data['row']->image);
+                $image_name =$this->uploadImage($request);
+                $request->request->add(['image'=>$image_name]);
+            }
             $request->request->add(['updated_by'=> auth()->user()->id]);
             $data['row']->update($request->all());
             session()->flash('success_message',$this->panel.' updated successfully');

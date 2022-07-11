@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,9 @@ class UserRequest extends FormRequest
     {
         return [
             'name'      =>'required|max:191',
-            'user_role' =>'required|',
-            'ban_unban' =>'required'
+            'slug'      =>'required|string|unique:categories,slug,'.$this->id,
+            'image'     =>'nullable',
+            'rank'      =>'required|integer|min:1|unique:categories,rank,'.$this->id,
         ];
     }
 }
