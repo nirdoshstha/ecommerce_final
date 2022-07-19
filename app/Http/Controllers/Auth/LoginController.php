@@ -34,7 +34,7 @@ class LoginController extends Controller
         if(auth()->user()->user_role=='vendor'){
             return 'vendor';
         }
-        if(auth()->user()->user_role==null){
+        if(auth()->user()->user_role=='clients'){
             return 'home';
         }
 

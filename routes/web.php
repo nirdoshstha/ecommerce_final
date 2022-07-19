@@ -21,6 +21,7 @@ use App\Http\Controllers\backend\UserController;
 Route::get('/', function () {
     return view('welcome');
 });
+Auth::routes();
 
 // Route::get('/vendor', function () {
 //     return view('vendor.index');
@@ -29,7 +30,7 @@ Route::get('/', function () {
 // Route::get('/admin', function () {
 //     return view('backend.layouts.master');
 // });
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 
@@ -58,17 +59,22 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 });
 
 
-
 //Vendor  Auth Group Middleware
 Route::middleware(['auth', 'isVendor'])->group(function () {
-    //  Route::get('/vendor',function(){
-    //      return view('vendor.index');
-    //  });
-    Route::get('/vendor',[App\Http\Controllers\vendor\VendorsController::class,'index'])->name('backend.index');
+     Route::get('/vendor',function(){
+         return view('vendor.index');
+     });
 
+
+
+});
+
+//User Role Banned /Unbanned
+Route::middleware(['auth', 'isUser'])->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 });
 
 
 
-Auth::routes();
+

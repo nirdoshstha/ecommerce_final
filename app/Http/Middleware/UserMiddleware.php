@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class VendorAuthenticate
+class UserMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,10 +17,9 @@ class VendorAuthenticate
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->user_role=='vendor'){
-            if(Auth::check() && Auth::user()->ban_unban)
+        if(Auth::check() && Auth::user()->ban_unban)
         {
-            $banned = Auth::user()->ban_unban == "1";
+            $banned = auth()->user()->ban_unban == "1";
             Auth::logout();
 
             if($banned == 1){
@@ -31,11 +30,8 @@ class VendorAuthenticate
         ->with('status',$message)
         ->withErrors(['email' => 'Your account has been Banned. Please contact Adminstrator.']);
         }
-            return $next($request);
-        }
-        else{
-            return redirect('/home')->with('status','Your are not allowed to access Vendor Dashboard..');
-        }
+        return $next($request);
 
     }
 }
+
