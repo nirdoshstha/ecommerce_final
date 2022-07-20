@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\vendor\VendorController;
 use App\Http\Controllers\backend\BackendController;
 use App\Http\Controllers\backend\CategoryController;
-use App\Http\Controllers\backend\UserController;
+use App\Http\Controllers\backend\SubcategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,15 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/category/edit/{id}',[CategoryController::class,'edit'])->name('category.edit');
     Route::put('/category/update/{id}',[CategoryController::class,'update'])->name('category.update');
     Route::delete('/category/destroy/{id}',[CategoryController::class,'destroy'])->name('category.destroy');
+
+    //Sub Category
+    Route::get('/subcategory',[SubcategoryController::class,'index'])->name('subcategory.index');
+    Route::get('/subcategory/show/{id}',[SubcategoryController::class,'show'])->name('subcategory.show');
+    Route::get('/subcategory/create',[SubcategoryController::class,'create'])->name('subcategory.create');
+    Route::post('/subcategory/store',[SubcategoryController::class,'store'])->name('subcategory.store');
+    Route::get('/subcategory/edit/{id}',[SubcategoryController::class,'edit'])->name('subcategory.edit');
+    Route::put('/subcategory/update/{id}',[SubcategoryController::class,'update'])->name('subcategory.update');
+    Route::delete('/subcategory/destroy/{id}',[SubcategoryController::class,'destroy'])->name('subcategory.destroy');
 
 
 });

@@ -10,7 +10,8 @@
       <thead>
       <tr>
         <th>S.n</th>
-        <th>Name</th>
+        <th>Category Name</th>
+        <th>Sub Category Name</th>
         <th>Slug</th>
         <th>Image</th>
         <th>Rank</th>
@@ -21,6 +22,7 @@
           @foreach ($data['row'] as  $datas)
                 <tr>
                     <td>{{$loop->iteration}}</td>
+                    <td>{{$datas->category->name}}</td>
                     <td>{{$datas->name}}</td>
                     <td>{{$datas->slug}}</td>
                     <td>
@@ -29,8 +31,6 @@
                             @else
                                 {{ 'Image Not Found' }}
                             @endif
-
-
                         </td>
                     <td>{{$datas->rank}}</td>
 

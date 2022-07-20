@@ -5,6 +5,7 @@
 {{$panel }} Edit
 @endsection
 
+
 @section('content')
 <div class="card py-3 px-3">
     {{ Form::model($data['row'], ['route' => [$base_route.'update', $data['row']->id], 'method'=>'put','files'=>'true']) }}
@@ -23,4 +24,5 @@
         $("#slug").val(slug);
     });
 </script>
+
 @endsection

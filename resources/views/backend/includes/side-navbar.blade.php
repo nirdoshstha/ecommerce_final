@@ -43,8 +43,9 @@
                   </p>
                 </a>
               </li>
+
           <li class="nav-item {{request()->is('category*')?'menu-open':''}}">
-            <a href="#" class="nav-link {{request()->is('category*') ? 'active' :""}}"">
+            <a href="#" class="nav-link {{request()->is('category*') ? 'active' :""}}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Category
@@ -60,6 +61,30 @@
               </li>
               <li class="nav-item">
                 <a href="{{route('category.create')}}" class="nav-link {{request()->is('category/create')?'active':''}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item {{request()->is('subcategory*')?'menu-open':''}}">
+            <a href="#" class="nav-link {{request()->is('subcategory*') ? 'active' :""}}">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Sub Category
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('subcategory.index')}}" class="nav-link {{request()->is('subcategory')?'active':''}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('subcategory.create')}}" class="nav-link {{request()->is('subcategory/create')?'active':''}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create</p>
                 </a>

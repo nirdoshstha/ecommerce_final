@@ -4,26 +4,28 @@ namespace App\Http\Controllers\backend;
 
 use Exception;
 use App\Models\Category;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
-use App\Http\Requests\CategoryRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SubcategoryRequest;
 
-class CategoryController extends BackendBaseController
+class SubcategoryController extends BackendBaseController
 {
-    protected $base_route   = 'category.';
-    protected $view_path    = 'backend.category.';
-    protected $panel        = 'Category';
-    protected $img_path     = 'uploads/category/';
+    protected $base_route   = 'subcategory.';
+    protected $view_path    = 'backend.subcategory.';
+    protected $panel        = 'Sub Category';
+    protected $img_path     = 'uploads/subcategory/';
 
     public function __construct()
     {
-        $this->model = new Category();
+        $this->model = new Subcategory();
     }
 
 
     public function index(){
         $data = [];
         $data['row'] = $this->model::all();
+
         // return view('backend.category.index',compact('user'));
         return view($this->__loadDataToView($this->view_path.'index'),compact('data'));
     }
@@ -35,10 +37,11 @@ class CategoryController extends BackendBaseController
     }
 
     public function create(){
-        return view($this->__loadDataToView($this->view_path.'create'));
+        $data['category_id'] =Category::active()->pluck('name','id');
+        return view($this->__loadDataToView($this->view_path.'create'),compact('data'));
     }
 
-    public function store(CategoryRequest $request){
+    public function store(SubcategoryRequest $request){
         try{
             if($request->hasFile('image_field')){
                 // $this->deleteImage($data['row']->image);
@@ -59,10 +62,11 @@ class CategoryController extends BackendBaseController
     public function edit($id){
         $data = [];
         $data['row'] = $this->model::find($id);
+        $data['category_id'] =Category::active()->pluck('name','id');
         return view($this->__loadDataToView($this->view_path.'edit'),compact('data'));
     }
 
-    public function update(CategoryRequest $request, $id){
+    public function update(SubcategoryRequest $request, $id){
         $data = [];
         $data['row']    = $this->model::find($id);
 
@@ -86,6 +90,7 @@ class CategoryController extends BackendBaseController
 
     public function destroy($id){
         $data['row'] = $this->model::findOrFail($id);
+
         try{
             $this->deleteImage($data['row']->image);
             $data['row']->delete();
