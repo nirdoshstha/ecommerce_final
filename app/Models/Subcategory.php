@@ -14,6 +14,11 @@ class Subcategory extends BackendBaseModel
         return $this->belongsTo(Category::class);
     }
 
+    public function products(){
+        return $this->hasMany(Product::class)->where('status','0');
+    }
+
+
 }
 
 

@@ -27,17 +27,37 @@ class LoginController extends Controller
      * @var string
      */
     // protected $redirectTo = RouteServiceProvider::HOME;
-    protected function redirectTo(){
-        if(auth()->user()->user_role=='admin'){
-            return 'admin';
-        }
-        if(auth()->user()->user_role=='vendor'){
-            return 'vendor';
-        }
-        if(auth()->user()->user_role=='clients'){
-            return 'home';
+    // protected function redirectTo(){
+    //     if(auth()->user()->user_role=='admin'){
+    //         return 'admin';
+    //     }
+    //     if(auth()->user()->user_role=='vendor'){
+    //         return 'vendor';
+    //     }
+    //     if(auth()->user()->user_role=='clients'){
+    //         return 'home';
+    //     }
+
+    // }
+    protected function authenticated(){
+        //Admin Login
+        if(auth()->user()->user_role=='admin')
+        {
+            return redirect('admin')->with('status','Welcome to Dashboard');
         }
 
+        //Vendor Login
+        if(auth()->user()->user_role=='vendor')
+        {
+            return redirect('vendor')->with('status','Welcome to Dashboard');
+
+        }
+
+        //Normal User Login
+        if(auth()->user()->user_role=='clients')
+        {
+            return redirect()->back()->with('status','You are logged in successfully');
+        }
 
     }
 
