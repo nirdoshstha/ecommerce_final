@@ -126,6 +126,8 @@ Route::middleware(['auth', 'isUser'])->group(function () {
 
 Route::get('/cart',[CartController::class,'index'])->name('cart.index');
 Route::post('/product/add-to-cart',[CartController::class,'addToCart'])->name('product.add_to_cart');
+Route::post('/cart/update',[CartController::class, 'cartUpdate'])->name('product.cart_update');
+Route::post('/cart/delete',[CartController::class,'cartDelete'])->name('product.cart_delete');
 
 });
 

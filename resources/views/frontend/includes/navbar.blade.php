@@ -65,7 +65,7 @@
 		<div class="middle-inner">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-2 col-md-2 col-12">
+					<div class="col-lg-3 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
 							<a href="index.html"><img src="{{asset('assets/frontend/images/logo.png')}}" alt="logo"></a>
@@ -86,21 +86,32 @@
 						<!--/ End Search Form -->
 						<div class="mobile-nav"></div>
 					</div>
-					<div class="col-lg-8 col-md-7 col-12">
-						<div class="search-bar-top">
-							<div class="search-bar">
-								<select>
+					<div class="col-lg-7 col-md-7 col-12">
+
+
+
+                                <div class="shop-newsletter">
+								{{--  <select>
 									<option selected="selected">All Category</option>
 									<option>watch</option>
 									<option>mobile</option>
 									<option>kid’s item</option>
-								</select>
-								<form>
-									<input name="search" placeholder="Search Products Here....." type="search">
-									<button class="btnn bg-primary"><i class="ti-search"></i></button>
-								</form>
-							</div>
-						</div>
+								</select>  --}}
+
+									{{--  <input name="search" placeholder="Search Products Here....." type="search">
+                                    <button class="btnn bg-primary"><i class="ti-search"></i></button>  --}}
+                                    <div class="inner">
+
+                                        <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+                                            <input name="EMAIL" placeholder="Your email address" required="" type="email">
+                                            <button class="btn bg-primary"><i class="ti-search"></i></button>
+                                        </form>
+                                    </div>
+
+                            </div>
+
+
+
 					</div>
 					<div class="col-lg-2 col-md-3 col-12">
 						<div class="right-bar">
@@ -112,31 +123,45 @@
 								<a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
 							</div>
 							<div class="sinlge-bar shopping">
-								<a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">2</span></a>
+                                <a href="{{route('cart.index')}}" class="single-icon"><i class="ti-bag"></i>
+
+                                     <span class="total-count">
+                                        @if(isset(auth()->user()->carts))
+                                            {{auth()->user()->carts->count()}}
+                                            @else 0
+                                         @endif
+                                        </span>
+
+                                </a>
 								<!-- Shopping Item -->
 								<div class="shopping-item">
 									<div class="dropdown-cart-header">
-										<span>2 Items</span>
+										<span> Items</span>
 										<a href="#">View Cart</a>
 									</div>
 									<ul class="shopping-list">
-										<li>
-											<a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-											<a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-											<h4><a href="#">Woman Ring</a></h4>
-											<p class="quantity">1x - <span class="amount">$99.00</span></p>
-										</li>
-										<li>
-											<a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-											<a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-											<h4><a href="#">Woman Necklace</a></h4>
-											<p class="quantity">1x - <span class="amount">$35.00</span></p>
-										</li>
+                                        @if(isset(auth()->user()->carts))
+                                            @forelse (auth()->user()->carts as $cart )
+                                                    <li>
+                                                        <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
+                                                        <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
+                                                        <h4><a href="#">{{$cart->product->name}}</a></h4>
+                                                        <p class="quantity">{{$cart->quantity}} x - <span class="amount">Nrs {{$cart->price}}</span></p>
+                                                    </li>
+                                            @empty
+                                            <li>No Data</li>
+
+                                            @endforelse
+                                        @endif
+
+
 									</ul>
 									<div class="bottom">
 										<div class="total">
-											<span>Total</span>
-											<span class="total-amount">$134.00</span>
+                                            <span>Total</span>
+                                            @if(isset(auth()->user()->carts))
+                                                <span class="total-amount">Nrs: {{auth()->user()->carts()->sum('total_amount')}}</span>
+                                            @endif
 										</div>
 										<a href="checkout.html" class="btn animate">Checkout</a>
 									</div>
